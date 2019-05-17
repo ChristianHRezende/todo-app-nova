@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import TodoList from './TodoList/TodoList'
-import axios from 'axios';
 import { Container, Header, Content } from 'native-base';
 import TodoForm from './TodoForm/TodoForm';
+import { getTodos, postTodo, putTodo } from '../../api';
 class Todo extends Component {
     constructor(props) {
         super(props)
@@ -17,27 +17,26 @@ class Todo extends Component {
     }
 
     loadList = () => {
-        axios.get('https://pokeapi.co/api/v2/pokemon/').then(resp => {
+        getTodos().then(resp => {
             this.setState({
-                items: resp.data.results
+                items: resp.data
             })
-        }).catch(error => console.log(error))
+        }).catch(error => console.log( error))
     }
 
     updateTaskStatus = (item) => {
         console.log("Realizar TOGGLE", item)
-        this.loadList()
+        putTodo(item,item.id).then(()=>this.loadList())   
     }
 
-    addTask = (text) =>{
-        console.log('Add to list')
-        this.loadList()
+    addTask = (text) => {
+        postTodo({name:text,isCompleted:false}).then(()=>this.loadList())
     }
-    
+
     render() {
         return (
             <Container>
-                <TodoForm  addTask ={this.addTask}/>
+                <TodoForm addTask={this.addTask} />
                 <Content>
                     <TodoList items={this.state.items} onToggle={this.updateTaskStatus} />
                 </Content>

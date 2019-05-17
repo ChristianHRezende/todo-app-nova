@@ -16,6 +16,7 @@ class TodoForm extends Component {
     }
 
     onPressButtonHandler = () => {
+        console.log('tste',this.state.text)
         if (this.state.text) {
             this.props.addTask(this.state.text)
         }

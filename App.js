@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import { Container, Content, Header } from 'native-base';
-import Todo from './Scenes/Todo/Todo';
+import Todo from './src/scenes/Todo/Todo';
 
 
 export default class App extends Component {
